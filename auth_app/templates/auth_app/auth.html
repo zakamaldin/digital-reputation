@@ -1,0 +1,24 @@
+{% extends 'auth_app/base.html' %}
+{% block content %}
+    <form class="register-form" action={% url 'signup' %} method="POST">
+        {% csrf_token %}
+        <input type="text" placeholder="Имя" name="first_name"/>
+        <input type="text" placeholder="Фамилия" name="last_name"/>
+        <input type="email" placeholder="Email" name="username"/>
+        <input type="password" placeholder="Пароль" name="password"/>
+        <button>Создать</button>
+        <p class="message">Уже зарегистированны? <a href="#">Войти</a></p>
+    </form>
+    <form class="login-form" action={% url 'login' %} method="POST">
+        {% csrf_token %}
+        <input type="email" placeholder="Email" name="username"/>
+        <input type="password" placeholder="Пароль" name="password"/>
+        <button>Войти</button>
+        <p class="message">Еще нет аккаунта? <a href="#">Создать</a></p>
+    </form>
+    <script>
+        $('.message a').click(function(){
+            $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+        });
+    </script>
+{% endblock %}

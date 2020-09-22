@@ -1,0 +1,10 @@
+{% extends 'app/base.html' %}
+
+{% block title %}
+    <title>Кончились попытки</title>
+{% endblock %}
+
+{% block content %}
+    Вы потратили все попытки на сдачу данного теста <br>
+    <a href="{% url 'tests' %}">Вернуться к списку тестов</a>
+{% endblock %}

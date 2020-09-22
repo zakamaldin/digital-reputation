@@ -1,0 +1,23 @@
+{% extends 'app/base.html' %}
+
+{% block title %}
+    {% if passed %}
+        <title>Успех!</title>
+    {% else %}
+        <title>Провал!</title>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <p class="lead mt-5">
+    {% if passed %}
+        Поздравляем, Вы успешно прошли тест <br>
+    {% else %}
+        К сожалению вы набрали недостаточное количество баллов, для сдачи теста <br>
+    {% endif %}
+
+    Ваш результат: {{ score }} баллов <br>
+    Вы ответили правильно на {{ good }} из {{ all }} вопросов <br>
+    </p>
+    <a href="{% url 'tests' %}">Вернуться к списку тестов</a>
+{% endblock %}

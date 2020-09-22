@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+{% block title %}
+<title>Вопрос {{ question.question_text }}</title>
+{% endblock %}
+
+{% block content %}
+    <h1 class="display-4 mt-5">{{ question.question_text }}</h1>
+    {% if count_of_right_answers > 1 %}
+        <p class="lead">В этом вопросе {{ count_of_right_answers }} правильных ответов</p>
+    {% endif %}
+    <div class="row justify-content-center mt-5">
+        <div class="col-4">
+            <form action={% url 'accept_answer' %} method="POST">{% csrf_token %}
+                <input type="hidden" value="{{ attempt_id }}" name="attempt_id">
+                <input type="hidden" value="{{ question_id }}" name="question_id">
+
+                {% for answer in answers %}
+                    <input type="{{ answers_type }}" id="{{ answer.id }}" name="answer" value="{{ answer.id }}">
+                    <label for="{{ answer.id }}">{{ answer.answer_text }}</label><br>
+                {% endfor %}
+                <input class="btn btn-primary w-100" type="submit" disabled="disabled" value="Дальше">
+            </form>
+        </div>
+    </div>
+<script>
+    $("input[name='answer']").click(function() {
+        if ($(this).is(':checked')) {
+            $("input[type='submit']").prop("disabled", false);
+        } else {
+            if ($("input[name='answer']").filter(':checked').length < 1){
+                $().attr('disabled',true);
+            }
+        }
+    })
+</script>
+{% endblock %}
