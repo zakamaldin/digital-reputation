@@ -77,6 +77,10 @@ def accept_answer(request):
         attempt = Attempt.objects.get(id=request.POST.get('attempt_id'))
         question = Question.objects.get(id=request.POST.get('question_id'))
         test = Test.objects.get(id=attempt.test_id)
+
+        if len(answers) > question.answer_set.filter(is_correct=True).count():
+            return redirect('get_question', test_id=test.id)
+
     except (Attempt.DoesNotExist, Question.DoesNotExist):
         return redirect('tests')
 
